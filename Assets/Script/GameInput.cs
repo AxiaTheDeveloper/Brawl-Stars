@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GameInput : MonoBehaviour
 {
@@ -9,11 +10,18 @@ public class GameInput : MonoBehaviour
     private Vector2 keyInputAttack = new Vector2 (0,0);
     private PlayerInput playerInput;
 
+    public event EventHandler OnShoot;
+
     private void Awake() {
         Instance = this;
         playerInput = new PlayerInput();
         playerInput.Player.Enable();
 
+        playerInput.Player.Shoot.performed += Shoot_performed;
+    }
+
+    private void Shoot_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj){
+        OnShoot(this, EventArgs.Empty);
     }
 
     public Vector2 GetInputMovementNormalized(){

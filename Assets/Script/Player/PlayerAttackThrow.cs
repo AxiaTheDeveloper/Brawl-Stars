@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerAttack : MonoBehaviour
+public class PlayerAttackThrow : MonoBehaviour
 {
     [SerializeField]private LineRenderer line;
     [SerializeField]private GameInput gameInput;
@@ -29,6 +29,8 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private Transform check;
 
     public event EventHandler OnAnimasiShoot;
+
+    public Vector3[] bulletPoints;
     
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class PlayerAttack : MonoBehaviour
         gameInput.OnShoot += gameInput_OnShoot;
         
         checkShootOnce = true;
+        bulletPoints = new Vector3[9];
     }
     void Update()
     {
@@ -92,12 +95,7 @@ public class PlayerAttack : MonoBehaviour
         return trailDistance;
     }
     private IEnumerator BulletSpawn(){
-        // while(totalBulletSave > 0){
-        //     theBullet = Instantiate(prefabBullet, bulletSpawnPlace.position, transform.rotation);
-        //     theBullet.GetComponent<Bullet>().changeBulletDistanceMati(trailDistance,arahPerpindahan);
-        //     totalBulletSave--;
-        //     yield return new WaitForSeconds(bulletSpawnWait);
-        // }
+
         foreach(Transform bull in bulletPool.bullets){
             bull.gameObject.SetActive(true);
             bull.position = bulletSpawnPlace.position;

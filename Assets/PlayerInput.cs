@@ -31,15 +31,24 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""c236ce54-060c-4c15-ac37-bbd65de8d40a"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""AttackArah"",
+                    ""type"": ""Value"",
+                    ""id"": ""e3e03017-84d3-47d3-9523-fe8ae28bf6a1"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shoot"",
                     ""type"": ""Button"",
-                    ""id"": ""13161aa0-38a3-4ab1-8d38-5d5cb4c4f4a2"",
+                    ""id"": ""4bbc2594-59b6-4af0-9b92-c0da6f85715e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -103,8 +112,19 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
+                    ""name"": """",
+                    ""id"": ""0c86c41a-7a3d-4dcf-b039-b9102ac8f24e"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""ArrowKeys"",
-                    ""id"": ""8a2cf347-bb76-46ae-9dab-561190763259"",
+                    ""id"": ""576f0a62-103e-4e74-adfa-ef49c7b55f02"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -115,7 +135,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""175d48de-5420-4bec-98f1-348f37cc6f98"",
+                    ""id"": ""21910c39-daaf-43fe-8faa-79b980f30cfe"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -126,7 +146,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""21328533-089f-4587-ad10-b904491e6da6"",
+                    ""id"": ""3f26e8f8-de8d-4a63-ae21-b9f37c932aa2"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -137,7 +157,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""578726db-8650-43d4-9964-aae25d6d4c31"",
+                    ""id"": ""e768e288-2eb9-4304-ac82-75d0aa2b6594"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -148,7 +168,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""5f757b4f-238b-4678-9911-f741b9505535"",
+                    ""id"": ""c2dbb870-cef8-4049-b395-ff11594caf8c"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -156,6 +176,39 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                     ""action"": ""AttackArah"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""67d6f45b-b56f-453b-8380-8254895d8712"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AttackArah"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efabfcb5-efaf-4826-b129-e11325c10f60"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7f17497-ba3b-4d8c-8391-78ed446c0055"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -166,6 +219,7 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_AttackArah = m_Player.FindAction("AttackArah", throwIfNotFound: true);
+        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -227,12 +281,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_AttackArah;
+    private readonly InputAction m_Player_Shoot;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @AttackArah => m_Wrapper.m_Player_AttackArah;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -248,6 +304,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AttackArah.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttackArah;
                 @AttackArah.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttackArah;
                 @AttackArah.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttackArah;
+                @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -258,6 +317,9 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
                 @AttackArah.started += instance.OnAttackArah;
                 @AttackArah.performed += instance.OnAttackArah;
                 @AttackArah.canceled += instance.OnAttackArah;
+                @Shoot.started += instance.OnShoot;
+                @Shoot.performed += instance.OnShoot;
+                @Shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -266,5 +328,6 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnAttackArah(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }

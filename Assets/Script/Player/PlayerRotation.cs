@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerRotation : MonoBehaviour
 {
     [SerializeField]private PlayerMovement playerMovement;
+    [SerializeField]private PlayerAttack playerAttack;
     [SerializeField]private float kecepatanRotasi;
     private Vector3 arahPindah;
     private void Update() {
@@ -12,7 +13,13 @@ public class PlayerRotation : MonoBehaviour
     }
 
     private void RotasiPlayer(){
-        arahPindah = playerMovement.GetArahPerpindahan();
+        if(playerAttack.GetIsAttack()){
+            arahPindah = playerAttack.GetArahPerpindahanAttack();
+        }
+        else{
+            arahPindah = playerMovement.GetArahPerpindahan();
+        }
+        
         transform.forward = Vector3.Slerp(transform.forward, arahPindah, kecepatanRotasi * Time.deltaTime);
     }
 }
