@@ -145,9 +145,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be13b263ef4b21545af44ca7e219d839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
+  check: 0
   line: {fileID: 7826927563963634316}
   gameInput: {fileID: 0}
-  attackSprite: {fileID: 7826927564961756969}
   bulletSpawnPlace: {fileID: 7826927565739319749}
   trailDistance: 50
   Player: {fileID: 7826927565570046783}
@@ -157,7 +158,8 @@ MonoBehaviour:
   prefabBullet: {fileID: 4788691735856469217, guid: 6114a49a644f96241a5bc728c2e8a4a9,
     type: 3}
   totalBullet: 3
-  check: {fileID: 0}
+  bulletPoints: []
+  LinePower_Y: 0
 --- !u!114 &7826927563963634318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +351,7 @@ GameObject:
   - component: {fileID: 7826927565570046780}
   - component: {fileID: 7826927565570046770}
   - component: {fileID: 7826927565570046771}
+  - component: {fileID: 4042681966867486384}
   m_Layer: 0
   m_Name: Cony
   m_TagString: Untagged
@@ -437,6 +440,19 @@ MonoBehaviour:
   playerMovement: {fileID: 7826927565570046780}
   playerAttack: {fileID: 7826927563963634319}
   kecepatanRotasi: 30
+--- !u!114 &4042681966867486384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7826927565570046782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b86372b8e29db48a4f19262f71ea9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerHealth: 0
 --- !u!1 &7826927565739319748
 GameObject:
   m_ObjectHideFlags: 0
@@ -601,6 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMove: {fileID: 7826927565570046780}
+  playerAttack: {fileID: 0}
 --- !u!4 &7715911203925545308 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f2ec745892f669a42af532f412dacb8d,

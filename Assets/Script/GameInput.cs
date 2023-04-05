@@ -29,6 +29,11 @@ public class GameInput : MonoBehaviour
         keyInputMove = keyInputMove.normalized;
         return keyInputMove;
     }
+    public Vector2 GetInputAttack(){
+        keyInputAttack = playerInput.Player.AttackArah.ReadValue<Vector2>();
+        
+        return keyInputAttack;
+    }
 
     public Vector2 GetInputAttackNormalized(){
         keyInputAttack = playerInput.Player.AttackArah.ReadValue<Vector2>();

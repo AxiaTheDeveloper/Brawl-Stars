@@ -3,11 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
+public interface IAttackShoot{
+    public void Attack(LineRenderer line, RaycastHit hit, Transform siAttack, float trailDistance){}
+    
+}
+
+public interface IAttackThrow{
+    public void Attack(LineRenderer line, Vector2 keyInputAttack, float LinePower_Y, float check, Vector3[] bulletPoints){}
+    
+}
+
+public class Shoot : IAttackShoot{
+    
+    public void Attack(LineRenderer line, RaycastHit hit, Transform siAttack, float trailDistance){
+        
+
+        if(Physics.Raycast(siAttack.position, siAttack.forward, out hit, trailDistance)){
+            line.SetPosition(1,hit.point);
+            // Debug.Log("yey");3
+        }else{
+            line.SetPosition(1,siAttack.position + siAttack.forward * trailDistance);
+            line.SetPosition(1, new Vector3(line.GetPosition(1).x, 0.1f,line.GetPosition(1).z));
+            // Debug.Log("boom");
+        }
+        
+    }
+}
+
+public class Throw : IAttackThrow{
+    public void Attack(LineRenderer line, Vector2 keyInputAttack, float LinePower_Y, float check, Vector3[] bulletPoints){
+        
+        
+        for(int i = 1; i < 10; i++){
+            line.SetPosition(i, new Vector3((line.GetPosition(i-1).x + keyInputAttack.x*check),i == 1? 4.4f+5 : (float)Math.Cos(LinePower_Y * (i*0.1f)) * (i*0.5f)*(check+3) + 4.2f, (line.GetPosition(i-1).z+keyInputAttack.y*check)));
+            // Debug.Log(line.GetPosition(i-1));
+            // Debug.Log(keyInputAttack);
+
+            bulletPoints[i-1] = line.GetPosition(i);
+
+        }
+        
+    }
+}
+
 public class PlayerAttack : MonoBehaviour
 {
+    public enum AttackType{
+        Shoot, Throw
+    }
+    public AttackType type;
+
+    private IAttackShoot shoot;
+    private IAttackThrow throws;
+
+    [SerializeField]private float check;
+
+
     [SerializeField]private LineRenderer line;
     [SerializeField]private GameInput gameInput;
-    [SerializeField]private Transform attackSprite, bulletSpawnPlace;
+    [SerializeField]private Transform bulletSpawnPlace;
     private Vector2 keyInputAttack = new Vector2 (0,0);
     private Vector3 arahPerpindahan = new Vector3(0,0,0);
     private float melihatKeyInput = 10;
@@ -17,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
     private RaycastHit hit;
 
 
-    //bullet
+    //Shoot
     [SerializeField]private BulletPool bulletPool;
     [SerializeField]private float bulletSpawnWait, canShootAgainWait;
     
@@ -26,35 +81,44 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private int totalBullet;
     private int totalBulletSave;
 
-    [SerializeField]private Transform check;
+    
 
-    public event EventHandler OnAnimasiShoot;
+    public event EventHandler OnAnimasiShoot, OnAnimasiThrow;
+
+    //THROWWW
+    public Vector3[] bulletPoints;
+    [SerializeField]private float LinePower_Y;
     
 
     // Update is called once per frame
+    private void Awake() {
+        shoot = new Shoot();
+        throws = new Throw();
+    }
     private void Start() {
         gameInput.OnShoot += gameInput_OnShoot;
         
         checkShootOnce = true;
+        if(type == AttackType.Shoot){
+            line.positionCount = 2;
+        }
+        if(type == AttackType.Throw){
+            line.positionCount = 10;
+            bulletPoints = new Vector3[9];
+        }
+        
     }
     void Update()
     {
-        Attack();
-    }
-
-    private void gameInput_OnShoot(object sender, System.EventArgs e){
-        if(canShoot && checkShootOnce){
-            OnAnimasiShoot?.Invoke(this,EventArgs.Empty);
-            Debug.Log("pew pew");
-            // totalBulletSave = totalBullet;
-            checkShootOnce = false;
-            StartCoroutine(BulletSpawn());
-            canShoot = false;
+        if(type == AttackType.Shoot){
+            // Debug.Log("itu");
+            keyInputAttack = gameInput.GetInputAttackNormalized();
         }
-    }
-
-    private void Attack(){
-        keyInputAttack = gameInput.GetInputAttackNormalized();
+        if(type == AttackType.Throw){
+            // Debug.Log("ini");
+            keyInputAttack = gameInput.GetInputAttack();
+        }
+        
         
         IsAttack = keyInputAttack != Vector2.zero;
         // Debug.Log(IsAttack);
@@ -63,24 +127,43 @@ public class PlayerAttack : MonoBehaviour
         canShoot = IsAttack;
         transform.position = new Vector3(Player.position.x,4.2f,Player.position.z);
         
-        attackSprite.position = new Vector3(keyInputAttack.x * melihatKeyInput + transform.position.x, 0 ,keyInputAttack.y * melihatKeyInput+transform.position.z);
+        
 
         arahPerpindahan.Set(keyInputAttack.x,0f, keyInputAttack.y);
         // Debug.Log(keyInputAttack);
         // transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-        line.SetPosition(0,transform.position);
-
-        if(Physics.Raycast(transform.position, transform.forward, out hit, trailDistance)){
-            line.SetPosition(1,hit.point);
-            // Debug.Log("yey");
-        }else{
-            line.SetPosition(1,transform.position + transform.forward * trailDistance);
-            line.SetPosition(1, new Vector3(line.GetPosition(1).x, 4.2f,line.GetPosition(1).z));
-            // Debug.Log("boom");
+        line.SetPosition(0,new Vector3(transform.position.x, 4.2f, transform.position.z));
+        if(type == AttackType.Shoot){
+            shoot.Attack(line,hit,transform,trailDistance);
         }
-        
-        
+        if(type == AttackType.Throw){
+            throws.Attack(line,keyInputAttack, LinePower_Y,check, bulletPoints);
+        }
     }
+
+    private void gameInput_OnShoot(object sender, System.EventArgs e){
+        if(canShoot && checkShootOnce){
+            checkShootOnce = false;
+            
+            Debug.Log("pew pew");
+            // totalBulletSave = totalBullet;
+            if(type == AttackType.Shoot){
+                OnAnimasiShoot?.Invoke(this,EventArgs.Empty);
+                StartCoroutine(BulletSpawn());
+            }
+            if(type == AttackType.Throw){
+                OnAnimasiThrow?.Invoke(this,EventArgs.Empty);
+                theBullet = Instantiate(prefabBullet);
+                theBullet.transform.position = bulletPoints[0];
+                // checkShootOnce= true;
+            }
+            
+            canShoot = false;
+        }
+    }
+
+
+    
     public bool GetIsAttack(){
         return IsAttack;
     }
@@ -110,6 +193,10 @@ public class PlayerAttack : MonoBehaviour
     }
     private IEnumerator canShootAgain(){
         yield return new WaitForSeconds(canShootAgainWait);
+        checkShootOnce = true;
+    }
+
+    public void CanThrowAgain(){
         checkShootOnce = true;
     }
 }

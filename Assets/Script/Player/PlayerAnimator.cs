@@ -9,6 +9,7 @@ public class PlayerAnimator : MonoBehaviour
     private Animator animatorController;
     private const string IS_WALK = "IsWalk";
     private const string IS_SHOOT = "IsShoot";
+    private const string IS_THROW = "IsThrow";
 
 
 
@@ -18,7 +19,12 @@ public class PlayerAnimator : MonoBehaviour
     }
     private void Start() {
         animatorController.SetBool(IS_WALK, false);
-        playerAttack.OnAnimasiShoot += playerAttack_OnAnimasiShoot;
+        if(playerAttack.type == PlayerAttack.AttackType.Shoot){
+            playerAttack.OnAnimasiShoot += playerAttack_OnAnimasiShoot;
+        }
+        if(playerAttack.type == PlayerAttack.AttackType.Throw){
+            playerAttack.OnAnimasiThrow += playerAttackThrow_OnAnimasiThrow;
+        }
         // Debug.Log(player.getIsJalan());
     }
 
@@ -30,5 +36,8 @@ public class PlayerAnimator : MonoBehaviour
 
     private void playerAttack_OnAnimasiShoot(object sender, System.EventArgs e){
         animatorController.SetTrigger(IS_SHOOT);
+    }
+    private void playerAttackThrow_OnAnimasiThrow(object sender, System.EventArgs e){
+        animatorController.SetTrigger(IS_THROW);
     }
 }

@@ -7,7 +7,7 @@ public class PlayerAttackThrow : MonoBehaviour
 {
     [SerializeField]private LineRenderer line;
     [SerializeField]private GameInput gameInput;
-    [SerializeField]private Transform attackSprite, bulletSpawnPlace;
+    [SerializeField]private Transform bulletSpawnPlace;
     private Vector2 keyInputAttack = new Vector2 (0,0);
     private Vector3 arahPerpindahan = new Vector3(0,0,0);
     private float melihatKeyInput = 10;
@@ -26,9 +26,9 @@ public class PlayerAttackThrow : MonoBehaviour
     [SerializeField]private int totalBullet;
     private int totalBulletSave;
 
-    [SerializeField]private Transform check;
 
-    public event EventHandler OnAnimasiShoot;
+
+    public event EventHandler OnAnimasiThrow;
 
     public Vector3[] bulletPoints;
     
@@ -47,7 +47,7 @@ public class PlayerAttackThrow : MonoBehaviour
 
     private void gameInput_OnShoot(object sender, System.EventArgs e){
         if(canShoot && checkShootOnce){
-            OnAnimasiShoot?.Invoke(this,EventArgs.Empty);
+            OnAnimasiThrow?.Invoke(this,EventArgs.Empty);
             Debug.Log("pew pew");
             // totalBulletSave = totalBullet;
             checkShootOnce = false;
@@ -66,7 +66,7 @@ public class PlayerAttackThrow : MonoBehaviour
         canShoot = IsAttack;
         transform.position = new Vector3(Player.position.x,4.2f,Player.position.z);
         
-        attackSprite.position = new Vector3(keyInputAttack.x * melihatKeyInput + transform.position.x, 0 ,keyInputAttack.y * melihatKeyInput+transform.position.z);
+        
 
         arahPerpindahan.Set(keyInputAttack.x,0f, keyInputAttack.y);
         // Debug.Log(keyInputAttack);

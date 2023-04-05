@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField]private float bulletSpeed, bulletDistances;
     
 
+    private const string BULLET_TAG = "Bullet";
     private const string ENEMY_TAG = "Enemy";
 
 
@@ -30,6 +31,9 @@ public class Bullet : MonoBehaviour
         if(other.gameObject.CompareTag(ENEMY_TAG)){
             Debug.Log("Ded");
             gameObject.SetActive(false);
+        }
+        else if(other.gameObject.CompareTag(BULLET_TAG)){
+            
         }
         else{
             gameObject.SetActive(false);
