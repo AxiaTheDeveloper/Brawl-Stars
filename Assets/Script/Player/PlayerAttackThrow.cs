@@ -10,7 +10,7 @@ public class PlayerAttackThrow : MonoBehaviour
     [SerializeField]private Transform bulletSpawnPlace;
     private Vector2 keyInputAttack = new Vector2 (0,0);
     private Vector3 arahPerpindahan = new Vector3(0,0,0);
-    private float melihatKeyInput = 10;
+
     [SerializeField]private float trailDistance;
     private bool IsAttack, canShoot, checkShootOnce;
     [SerializeField]private Transform Player;

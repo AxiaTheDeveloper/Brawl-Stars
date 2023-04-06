@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 100
   bulletDistances: 0
+  damageMin: 5
+  damageMax: 15
 --- !u!135 &8915970875806738740
 SphereCollider:
   m_ObjectHideFlags: 0

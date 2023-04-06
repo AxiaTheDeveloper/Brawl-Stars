@@ -173,5 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421d1e5973db51b47a2efe82f609344d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAttack: {fileID: 0}
-  kecepatan: 0.2
+  kecepatan: 0.5
+  damageMin: 15
+  damageMax: 30

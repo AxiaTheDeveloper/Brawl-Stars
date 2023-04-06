@@ -18,7 +18,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        Move();
+        if(BrawlGameManager.Instance.IsGameStart()){
+            Move();
+        }
+        
     }
 
     private void Move(){

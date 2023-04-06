@@ -24,7 +24,7 @@ public class Shoot : IAttackShoot{
             // Debug.Log("yey");3
         }else{
             line.SetPosition(1,siAttack.position + siAttack.forward * trailDistance);
-            line.SetPosition(1, new Vector3(line.GetPosition(1).x, 0.1f,line.GetPosition(1).z));
+            line.SetPosition(1, new Vector3(line.GetPosition(1).x, 4.2f,line.GetPosition(1).z));
             // Debug.Log("boom");
         }
         
@@ -65,7 +65,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField]private Transform bulletSpawnPlace;
     private Vector2 keyInputAttack = new Vector2 (0,0);
     private Vector3 arahPerpindahan = new Vector3(0,0,0);
-    private float melihatKeyInput = 10;
+
     [SerializeField]private float trailDistance;
     private bool IsAttack, canShoot, checkShootOnce;
     [SerializeField]private Transform Player;
@@ -78,8 +78,7 @@ public class PlayerAttack : MonoBehaviour
     
     [SerializeField]private GameObject prefabBullet;
     private GameObject theBullet;
-    [SerializeField]private int totalBullet;
-    private int totalBulletSave;
+
 
     
 
@@ -88,8 +87,11 @@ public class PlayerAttack : MonoBehaviour
     //THROWWW
     public Vector3[] bulletPoints;
     [SerializeField]private float LinePower_Y;
-    
 
+
+    //buat identitas bulet;
+    
+    [SerializeField]private PlayerIdentity playerIdentity;
     // Update is called once per frame
     private void Awake() {
         shoot = new Shoot();
@@ -110,35 +112,38 @@ public class PlayerAttack : MonoBehaviour
     }
     void Update()
     {
-        if(type == AttackType.Shoot){
+        if(BrawlGameManager.Instance.IsGameStart()){
+            if(type == AttackType.Shoot){
             // Debug.Log("itu");
             keyInputAttack = gameInput.GetInputAttackNormalized();
-        }
-        if(type == AttackType.Throw){
-            // Debug.Log("ini");
-            keyInputAttack = gameInput.GetInputAttack();
-        }
-        
-        
-        IsAttack = keyInputAttack != Vector2.zero;
-        // Debug.Log(IsAttack);
-        // Debug.Log
-        line.enabled = IsAttack;
-        canShoot = IsAttack;
-        transform.position = new Vector3(Player.position.x,4.2f,Player.position.z);
-        
-        
+            }
+            if(type == AttackType.Throw){
+                // Debug.Log("ini");
+                keyInputAttack = gameInput.GetInputAttack();
+            }
+            
+            
+            IsAttack = keyInputAttack != Vector2.zero;
+            // Debug.Log(IsAttack);
+            // Debug.Log
+            line.enabled = IsAttack;
+            canShoot = IsAttack;
+            transform.position = new Vector3(Player.position.x,4.2f,Player.position.z);
+            
+            
 
-        arahPerpindahan.Set(keyInputAttack.x,0f, keyInputAttack.y);
-        // Debug.Log(keyInputAttack);
-        // transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
-        line.SetPosition(0,new Vector3(transform.position.x, 4.2f, transform.position.z));
-        if(type == AttackType.Shoot){
-            shoot.Attack(line,hit,transform,trailDistance);
+            arahPerpindahan.Set(keyInputAttack.x,0f, keyInputAttack.y);
+            // Debug.Log(keyInputAttack);
+            // transform.eulerAngles = new Vector3(0, transform.eulerAngles.y, 0);
+            line.SetPosition(0,new Vector3(transform.position.x, 4.2f, transform.position.z));
+            if(type == AttackType.Shoot){
+                shoot.Attack(line,hit,transform,trailDistance);
+            }
+            if(type == AttackType.Throw){
+                throws.Attack(line,keyInputAttack, LinePower_Y,check, bulletPoints);
+            }
         }
-        if(type == AttackType.Throw){
-            throws.Attack(line,keyInputAttack, LinePower_Y,check, bulletPoints);
-        }
+        
     }
 
     private void gameInput_OnShoot(object sender, System.EventArgs e){
@@ -154,6 +159,7 @@ public class PlayerAttack : MonoBehaviour
             if(type == AttackType.Throw){
                 OnAnimasiThrow?.Invoke(this,EventArgs.Empty);
                 theBullet = Instantiate(prefabBullet);
+                theBullet.GetComponent<BulletThrow>().SetTrail(this, playerIdentity);
                 theBullet.transform.position = bulletPoints[0];
                 // checkShootOnce= true;
             }

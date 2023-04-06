@@ -6,10 +6,12 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField]private PlayerMovement playerMove;
     [SerializeField]private PlayerAttack playerAttack;
+    [SerializeField]private PlayerIdentity playerIdentity;
     private Animator animatorController;
     private const string IS_WALK = "IsWalk";
     private const string IS_SHOOT = "IsShoot";
     private const string IS_THROW = "IsThrow";
+    private const string IS_DEATH = "IsDeath";
 
 
 
@@ -26,6 +28,8 @@ public class PlayerAnimator : MonoBehaviour
             playerAttack.OnAnimasiThrow += playerAttackThrow_OnAnimasiThrow;
         }
         // Debug.Log(player.getIsJalan());
+
+        playerIdentity.OnDeath += playerIdentity_OnDeath;
     }
 
     private void Update(){
@@ -39,5 +43,10 @@ public class PlayerAnimator : MonoBehaviour
     }
     private void playerAttackThrow_OnAnimasiThrow(object sender, System.EventArgs e){
         animatorController.SetTrigger(IS_THROW);
+    }
+
+    private void playerIdentity_OnDeath(object sender, System.EventArgs e){
+        animatorController.SetTrigger(IS_DEATH);
+        animatorController.StopPlayback();
     }
 }
