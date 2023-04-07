@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "PlayerInputB",
     "maps": [
         {
             "name": "Player",
@@ -48,7 +48,7 @@
                 {
                     "name": "up",
                     "id": "86d549fc-94b8-4ef2-bd27-98a04840d3ea",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/i",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -59,7 +59,7 @@
                 {
                     "name": "down",
                     "id": "eb7cd0f7-9f9c-4a2f-8b96-73070a93e6f5",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -70,7 +70,7 @@
                 {
                     "name": "left",
                     "id": "9afd848e-9303-45fa-b07b-f64c18087e9c",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -81,7 +81,7 @@
                 {
                     "name": "right",
                     "id": "f66b4f79-5fcd-4c36-8c35-571dc39bd0c5",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -169,7 +169,7 @@
                 {
                     "name": "",
                     "id": "efabfcb5-efaf-4826-b129-e11325c10f60",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

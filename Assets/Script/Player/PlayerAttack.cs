@@ -115,7 +115,7 @@ public class PlayerAttack : MonoBehaviour
         if(BrawlGameManager.Instance.IsGameStart()){
             if(type == AttackType.Shoot){
             // Debug.Log("itu");
-            keyInputAttack = gameInput.GetInputAttackNormalized();
+                keyInputAttack = gameInput.GetInputAttackNormalized();
             }
             if(type == AttackType.Throw){
                 // Debug.Log("ini");
@@ -147,10 +147,10 @@ public class PlayerAttack : MonoBehaviour
     }
 
     private void gameInput_OnShoot(object sender, System.EventArgs e){
-        if(canShoot && checkShootOnce){
+        if(canShoot && checkShootOnce && BrawlGameManager.Instance.IsGameStart()){
             checkShootOnce = false;
             
-            Debug.Log("pew pew");
+            // Debug.Log("pew pew");
             // totalBulletSave = totalBullet;
             if(type == AttackType.Shoot){
                 OnAnimasiShoot?.Invoke(this,EventArgs.Empty);

@@ -16,8 +16,11 @@ public class PlayerAnimator : MonoBehaviour
 
 
     private void Awake() {
+        animatorController = null;
         animatorController = GetComponent<Animator>();
-        
+        if(!animatorController){
+            Debug.Log("NO");
+        }
     }
     private void Start() {
         animatorController.SetBool(IS_WALK, false);
@@ -47,6 +50,6 @@ public class PlayerAnimator : MonoBehaviour
 
     private void playerIdentity_OnDeath(object sender, System.EventArgs e){
         animatorController.SetTrigger(IS_DEATH);
-        animatorController.StopPlayback();
+        // animatorController.StopPlayback();
     }
 }

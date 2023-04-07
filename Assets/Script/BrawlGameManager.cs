@@ -14,6 +14,8 @@ public class BrawlGameManager : MonoBehaviour
     private bool isGameStart;
     [SerializeField]private float countDownTimer;
 
+    public event EventHandler OnCountDownDone;
+
     private void Awake() {
         Instance = this;
         state = StateGame.CountDownToStart;
@@ -28,6 +30,7 @@ public class BrawlGameManager : MonoBehaviour
             countDownTimer -= Time.deltaTime;
             if(countDownTimer <= 0f){
                 state = StateGame.GameStart;
+                OnCountDownDone?.Invoke(this,EventArgs.Empty);
                 //matiin ui countdown
             }
         }
