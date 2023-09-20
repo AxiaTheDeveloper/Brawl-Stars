@@ -1,5 +1,7 @@
 # Brawl Stars
- 
+
+[Brawl Stars Itch.io Link ](https://axiathedeveloper.itch.io/brawl-stars-super-beta?secret=YGiyDpxRsugpu0R10J58VPsf93A) **(Windows Only)**
+
 IMPLEMENTASI Game Optimization
 - Penggunaan Couroutine dibanding Invoke()
 - Membuat const string untuk tags atau trigger pada animasi dan pada playerprefs
